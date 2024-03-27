@@ -1,66 +1,144 @@
 import 'package:flutter/material.dart';
+import 'package:relics/Cart.dart';
 
-import 'ToyManufacturer.dart';
-import 'ToyTypeCategories.dart';
-import 'ToyYearCategories.dart';
+import 'Categories.dart';
+import 'Search.dart'; // Import the Search screen
 import 'Toylist.dart';
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Relics'),
+        title: Text('Relic+'),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Search(), // Navigate to Search screen
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(
+                    color: Colors.grey, // Border color
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Text(
+                          'Search',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                Search(), // Navigate to Search screen
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        actions: [
+          CartIcon(), // Include the CartIcon widget here
+        ],
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            
-            SizedBox(height: 20), // Spacer between buttons
-            // Toy Types Button
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ToyTypeCategories()),
-                );
-              },
-              child: Text('Toy Types'),
+            Text(
+              'Welcome to Toys Application!',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20), // Spacer between buttons
-            // Toy Release Year Button
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ToyYearCategories()),
-                );
-              },
-              child: Text('Toy Release Year'),
-            ),
-            SizedBox(height: 20), // Spacer between buttons
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ToyManufacturer()),
-                );
-              },
-              child: Text('Toy Manufacturer'),
-            ),
-            SizedBox(height: 20), // Spacer between buttons
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ToyList()),
-                );
-              },
-              child: Text('All Toys'),
+            SizedBox(height: 20),
+            Text(
+              'Explore various toy categories, manufacturers, and release years.',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categories',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Toy Lists', // New item for Toy Lists
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.local_offer),
+            label: 'Coupon',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
+          ),
+        ],
+        currentIndex: 0, // Set index of Categories page
+        selectedItemColor:
+            Color.fromARGB(255, 108, 2, 126), // Selected item color
+        unselectedItemColor:
+            Color.fromARGB(255, 95, 76, 113), // Unselected item color
+        iconSize: 24, // Adjust icon size
+        onTap: (index) {
+          // Handle navigation
+          switch (index) {
+            case 0:
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Categories()),
+              );
+              break;
+            case 2: // For Toy Lists
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ToyList()), // Navigate to ToyList
+              );
+              break;
+            // Add navigation for other items if needed
+          }
+        },
       ),
     );
   }

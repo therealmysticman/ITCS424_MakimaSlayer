@@ -1,39 +1,32 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'ToyDetails.dart';
 
-class ToyYearCategories extends StatelessWidget {
+class ToyPriceCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Toy Year Categories'),
+        title: Text('Toy Price Categories'),
       ),
       body: ListView(
         children: [
           ListTile(
-            title: Text('1970-1999'),
+            title: Text('Below 1,000 Baht'),
             onTap: () {
-              _showToysByYearRange(context, 1970, 1999);
+              _showToysByPriceRange(context, 'Below 1000 Baht', 0, 1000);
             },
           ),
           ListTile(
-            title: Text('2000-2010'),
+            title: Text('1,000-1,999 Baht'),
             onTap: () {
-              _showToysByYearRange(context, 2000, 2010);
+              _showToysByPriceRange(context, '1000-1999 Baht', 1000, 2000);
             },
           ),
           ListTile(
-            title: Text('2011-2018'),
+            title: Text('Above 2,000 Baht'),
             onTap: () {
-              _showToysByYearRange(context, 2011, 2018);
-            },
-          ),
-          ListTile(
-            title: Text('2019-present'),
-            onTap: () {
-              _showToysByYearRange(context, 2019, DateTime.now().year);
+              _showToysByPriceRange(context, 'Above 2000 Baht', 2000, double.infinity);
             },
           ),
         ],
@@ -41,33 +34,32 @@ class ToyYearCategories extends StatelessWidget {
     );
   }
 
-  void _showToysByYearRange(BuildContext context, int startYear, int endYear) {
+  void _showToysByPriceRange(BuildContext context, String priceCategory, double minPrice, double maxPrice) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ToysByYearRangeScreen(startYear: startYear, endYear: endYear),
+        builder: (context) => ToysByPriceScreen(priceCategory: priceCategory, minPrice: minPrice, maxPrice: maxPrice),
       ),
     );
   }
 }
 
-class ToysByYearRangeScreen extends StatelessWidget {
-  final int startYear;
-  final int endYear;
+class ToysByPriceScreen extends StatelessWidget {
+  final String priceCategory;
+  final double minPrice;
+  final double maxPrice;
 
-  const ToysByYearRangeScreen({required this.startYear, required this.endYear});
+  const ToysByPriceScreen({required this.priceCategory, required this.minPrice, required this.maxPrice});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Toys from $startYear to $endYear'),
+        title: Text('Toys $priceCategory'),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('ToyData')
-            .where('Release Year', isGreaterThanOrEqualTo: startYear)
-            .where('Release Year', isLessThanOrEqualTo: endYear)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -76,15 +68,25 @@ class ToysByYearRangeScreen extends StatelessWidget {
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
+
+          final List<Map<String, dynamic>> toysInRange = snapshot.data!.docs
+              .map((doc) => doc.data() as Map<String, dynamic>)
+              .where((toy) {
+                final String priceString = toy['Price'];
+                final double price = double.tryParse(priceString.replaceAll(' Baht', '')) ?? 0.0;
+                return price >= minPrice && price < maxPrice;
+              })
+              .toList();
+
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, // Two items per row
               crossAxisSpacing: 8.0,
               mainAxisSpacing: 8.0,
             ),
-            itemCount: snapshot.data!.docs.length,
+            itemCount: toysInRange.length,
             itemBuilder: (BuildContext context, int index) {
-              Map<String, dynamic> data = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              Map<String, dynamic> data = toysInRange[index];
               return GestureDetector(
                 onTap: () {
                   // Navigate to ToyDetails screen

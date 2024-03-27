@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:relics/Checkout.dart';
 
 class ToyDetails extends StatelessWidget {
   final Map<String, dynamic> toyData;
@@ -7,6 +8,7 @@ class ToyDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int _selectedIndex = -1;
     return Scaffold(
       appBar: AppBar(
         title: Text('Toy Details'),
@@ -20,7 +22,7 @@ class ToyDetails extends StatelessWidget {
               Image.network(toyData['Image']),
               SizedBox(height: 20),
               Text(
-                'Title: ${toyData['Title']}',
+                '${toyData['Title']}',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
@@ -28,31 +30,44 @@ class ToyDetails extends StatelessWidget {
               Text('Price: ${toyData['Price']}'),
               Text('Release Year: ${toyData['Release Year']}'),
               Text('Type: ${toyData['Type']}'),
-              SizedBox(height: 20), // Adding some space between text and buttons
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Add to cart functionality
-                      },
-                      child: Text('Add to Cart'),
-                    ),
-                  ),
-                  SizedBox(width: 20), // Adding space between buttons
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Buy now functionality
-                      },
-                      child: Text('Buy Now'),
-                    ),
-                  ),
-                ],
-              ),
+              SizedBox(
+                  height: 20), // Adding some space between text and buttons
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Add to Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Make a Purchase',
+          ),
+        ],
+        currentIndex: _selectedIndex == -1 ? 0 : _selectedIndex,
+        selectedItemColor: _selectedIndex == -1
+            ? Color.fromARGB(255, 94, 61, 123)
+            : Colors.amber[800],
+        unselectedItemColor: Color.fromARGB(255, 94, 61, 123),
+        onTap: (index) {
+          // Handle navigation
+          switch (index) {
+            case 0:
+              // Navigate to home
+              break;
+            case 1:
+           Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CheckoutPage(selectedItemsIds: [toyData['ID']]),
+           ));
+               
+              break;
+          }
+        },
       ),
     );
   }

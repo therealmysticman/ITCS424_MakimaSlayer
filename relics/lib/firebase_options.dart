@@ -44,7 +44,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDMNI1CTFmAAGyBpvllSHBezzrYkCLmC_E',
+    apiKey: 'AIzaSyB-8HDks1LIgAgdgWCnadsTozaaxRxJLPs',
     appId: '1:86057455454:web:7cffe492b654beb364c9cf',
     messagingSenderId: '86057455454',
     projectId: 'relics-data',
@@ -53,7 +53,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB350N1NuYYccJbOIr88XCOS7G3cntDX9E',
+    apiKey: 'AIzaSyCUlfTFOwcA7yvbNH7M0rBy-QQmGIw73hY',
     appId: '1:86057455454:android:b725b9876fc00a9864c9cf',
     messagingSenderId: '86057455454',
     projectId: 'relics-data',
@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDhNfooBm-GdyOQMq0NgCusZF-Fvppd1P8',
+    apiKey: 'AIzaSyD0MPMcVr1kzZo7yhqaRgA4V0-YY3WAV8E',
     appId: '1:86057455454:ios:ab33c98d8d9b9f0964c9cf',
     messagingSenderId: '86057455454',
     projectId: 'relics-data',
@@ -70,7 +70,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDhNfooBm-GdyOQMq0NgCusZF-Fvppd1P8',
+    apiKey: 'AIzaSyD0MPMcVr1kzZo7yhqaRgA4V0-YY3WAV8E',
     appId: '1:86057455454:ios:19b817184b2dfc0c64c9cf',
     messagingSenderId: '86057455454',
     projectId: 'relics-data',

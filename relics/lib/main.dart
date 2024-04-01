@@ -1,15 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'Home.dart'; // Import the Home widget
-import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+import 'package:relics/Home.dart'; // Import the Home widget
+import 'package:relics/Provider.dart'; // Import the CartProvider
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-); // Initialize Firebase
-  runApp(MyApp());
+  await Firebase.initializeApp();
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,5 +27,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:relics/Cart.dart';
 
 class CheckoutPage extends StatelessWidget {
   final List<String> selectedItemsIds;
@@ -12,9 +11,6 @@ class CheckoutPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Checkout'),
-        actions: [
-          CartIcon(), // Include the CartIcon widget here
-        ],
       ),
       body: FutureBuilder<List<DocumentSnapshot>>(
         future: _fetchSelectedItems(),

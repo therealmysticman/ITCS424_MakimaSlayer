@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relics/Cart.dart';
+import 'package:relics/CartIcon.dart';
 
 import 'Categories.dart';
 import 'Search.dart'; // Import the Search screen
@@ -8,6 +8,7 @@ import 'Toylist.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Define your cartItems list
     return Scaffold(
       appBar: AppBar(
         title: Text('Relic+'),
@@ -64,29 +65,38 @@ class Home extends StatelessWidget {
           CartIcon(), // Include the CartIcon widget here
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Welcome to Toys Application!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/imagebg.jpg"),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop), // Adjust opacity here (0.5 means 50% opacity)
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Welcome to Toys Application!',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Explore various toy categories, manufacturers, and release years.',
-              style: TextStyle(
-                fontSize: 18,
+              SizedBox(height: 20),
+              Text(
+                'Explore various toy categories, manufacturers, and release years.',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

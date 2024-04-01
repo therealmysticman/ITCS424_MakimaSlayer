@@ -60,12 +60,11 @@ class ToyDetails extends StatelessWidget {
                 SnackBar(content: Text('Item added to cart')),
               );
             } else if (index == 1) {
+              double totalPriceTHB = double.parse(toyData['Price'].replaceAll(RegExp(r'[^\d.]'), ''));
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CheckoutPage(selectedItemsIds: [
-                    toyData['ID']
-                  ]), // Assuming selectedItemsIds expects a List<String>
+                  builder: (context) => CheckoutPage(selectedItemsIds: [toyData['ID'].toString()], totalPriceTHB: totalPriceTHB),
                 ),
               );
             }

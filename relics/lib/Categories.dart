@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:relics/ToyPriceCategories.dart';
 
 import 'CartIcon.dart';
+import 'Dashboard.dart';
 import 'Home.dart';
 import 'ToyList.dart'; // Import the ToyList screen
 import 'ToyManufacturer.dart';
@@ -166,6 +167,13 @@ class Categories extends StatelessWidget {
               );
               break;
             // Add navigation for other items if needed
+            case 3:
+              break;
+            case 4:
+            Navigator.push(context, 
+            MaterialPageRoute(builder: (context) => Dashboard())
+            );
+              break;
           }
         },
       ),

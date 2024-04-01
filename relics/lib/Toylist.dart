@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:relics/Home.dart';
 import 'Categories.dart';
+import 'Dashboard.dart';
 import 'ToyDetails.dart'; // Import the ToyDetails screen
 
 class ToyList extends StatelessWidget {
@@ -102,16 +103,15 @@ class ToyList extends StatelessWidget {
         selectedItemColor: Color.fromARGB(255, 108, 2, 126), // Selected item color
         unselectedItemColor: Color.fromARGB(255, 95, 76, 113), // Unselected item color
         iconSize: 24, // Adjust icon size
-        onTap: (index) {
+       onTap: (index) {
           // Handle navigation
           switch (index) {
             case 0:
-              Navigator.push(
+               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Home()),
               );
-              break;
-              case 1:
+            case 1:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Categories()),
@@ -120,10 +120,18 @@ class ToyList extends StatelessWidget {
             case 2: // For Toy Lists
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ToyList()), // Navigate to ToyList
+                MaterialPageRoute(
+                    builder: (context) => ToyList()), // Navigate to ToyList
               );
               break;
             // Add navigation for other items if needed
+            case 3:
+              break;
+            case 4:
+            Navigator.push(context, 
+            MaterialPageRoute(builder: (context) => Dashboard())
+            );
+              break;
           }
         },
       ),

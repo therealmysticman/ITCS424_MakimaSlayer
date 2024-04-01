@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relics/CartIcon.dart';
+import 'package:relics/Dashboard.dart';
 
 import 'Categories.dart';
 import 'Search.dart'; // Import the Search screen
@@ -80,7 +81,7 @@ class Home extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Welcome to Toys Application!',
+                'Welcome to Relic+!',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -89,7 +90,7 @@ class Home extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                'Explore various toy categories, manufacturers, and release years.',
+                'Explore various toy range from old to latest.',
                 style: TextStyle(
                   fontSize: 18,
                 ),
@@ -147,6 +148,13 @@ class Home extends StatelessWidget {
               );
               break;
             // Add navigation for other items if needed
+            case 3:
+              break;
+            case 4:
+            Navigator.push(context, 
+            MaterialPageRoute(builder: (context) => Dashboard())
+            );
+              break;
           }
         },
       ),

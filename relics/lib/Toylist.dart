@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:relics/Home.dart';
 import 'Categories.dart';
+import 'CouponList.dart';
 import 'Dashboard.dart';
 import 'ToyDetails.dart'; // Import the ToyDetails screen
 
@@ -35,7 +36,9 @@ class ToyList extends StatelessWidget {
                   // Navigate to ToyDetails screen
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ToyDetails(toyData: data)),
+                    MaterialPageRoute(
+                      builder: (context) => ToyDetails(toyData: data, selectedItemsIds: [], selectedCouponData: {}),
+                ),
                   );
                 },
                 child: Card(
@@ -126,6 +129,11 @@ class ToyList extends StatelessWidget {
               break;
             // Add navigation for other items if needed
             case 3:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CouponList()), // Navigate to ToyList
+              );
               break;
             case 4:
             Navigator.push(context, 

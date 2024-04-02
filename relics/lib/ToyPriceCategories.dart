@@ -93,8 +93,8 @@ class ToysByPriceScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ToyDetails(toyData: data),
-                    ),
+                      builder: (context) => ToyDetails(toyData: data, selectedItemsIds: [], selectedCouponData: {}),
+                ),
                   );
                 },
                 child: Card(

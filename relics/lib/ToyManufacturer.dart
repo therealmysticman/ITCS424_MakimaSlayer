@@ -95,7 +95,7 @@ class ToysByManufacturerScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ToyDetails(toyData: data),
+                      builder: (context) => ToyDetails(toyData: data, selectedItemsIds: [], selectedCouponData: {}), // Pass empty data for selected items and coupon,
                     ),
                   );
                 },

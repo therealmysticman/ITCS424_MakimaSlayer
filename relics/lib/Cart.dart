@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:relics/Checkout.dart';
-import 'package:relics/Provider.dart'; // Import the CartProvider
+import 'package:relics/CartProvider.dart'; // Import the CartProvider
+import 'package:relics/CouponProvider.dart'; // Import the CouponProvider
 
 class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
+    final selectedCouponData = Provider.of<CouponProvider>(context).selectedCouponData;
 
     // Calculate total price in Thai Baht (THB)
     double totalPriceTHB = 0.0;
@@ -112,11 +114,15 @@ class CartPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate to checkout page with selected item IDs
+                  // Navigate to checkout page with selected item IDs and coupon data
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CheckoutPage(selectedItemsIds: selectedItemsIds, totalPriceTHB: totalPriceTHB),
+                      builder: (context) => CheckoutPage(
+                        selectedItemsIds: selectedItemsIds,
+                        totalPriceTHB: totalPriceTHB,
+                        selectedCouponData: selectedCouponData,
+                      ),
                     ),
                   );
                 },

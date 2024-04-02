@@ -90,9 +90,9 @@ class ToysByYearRangeScreen extends StatelessWidget {
                   // Navigate to ToyDetails screen
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => ToyDetails(toyData: data),
-                    ),
+                   MaterialPageRoute(
+                      builder: (context) => ToyDetails(toyData: data, selectedItemsIds: [], selectedCouponData: {}),
+                ),
                   );
                 },
                 child: Card(

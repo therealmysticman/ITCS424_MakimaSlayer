@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relics/CartIcon.dart';
+import 'package:relics/CouponList.dart';
 import 'package:relics/Dashboard.dart';
 
 import 'Categories.dart';
@@ -149,6 +150,11 @@ class Home extends StatelessWidget {
               break;
             // Add navigation for other items if needed
             case 3:
+             Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CouponList()), // Navigate to ToyList
+              );
               break;
             case 4:
             Navigator.push(context, 

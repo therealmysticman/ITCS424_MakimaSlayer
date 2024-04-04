@@ -9,8 +9,10 @@ import 'Dashboard.dart';
 import 'Home.dart';
 import 'Toylist.dart';
 
-
 class CouponList extends StatelessWidget {
+  final String usernameEmail;
+  CouponList({required this.usernameEmail});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +73,8 @@ class CouponList extends StatelessWidget {
                   onPressed: () {
                     final isSelected = couponProvider.isSelected(coupon.id);
                     if (!isSelected) {
-                      couponProvider.selectCoupon(coupon.id, coupon.data() as Map<String, dynamic>);
+                      couponProvider.selectCoupon(
+                          coupon.id, coupon.data() as Map<String, dynamic>);
                       // Navigate to GetCoupon page
                     } else {
                       couponProvider.deselectCoupon(coupon.id);
@@ -84,7 +87,6 @@ class CouponList extends StatelessWidget {
                   ),
                   child: Text(isSelected ? 'Selected' : 'Select'),
                 ),
-                
               );
             },
           );
@@ -112,45 +114,49 @@ class CouponList extends StatelessWidget {
             icon: Icon(Icons.dashboard),
             label: 'Dashboard',
           ),
-          
         ],
         currentIndex: 3, // Set index of Categories page
-        selectedItemColor: Color.fromARGB(255, 108, 2, 126), // Selected item color
-        unselectedItemColor: Color.fromARGB(255, 95, 76, 113), // Unselected item color
+        selectedItemColor:
+            Color.fromARGB(255, 108, 2, 126), // Selected item color
+        unselectedItemColor:
+            Color.fromARGB(255, 95, 76, 113), // Unselected item color
         iconSize: 24, // Adjust icon size
-       onTap: (index) {
+        onTap: (index) {
           // Handle navigation
           switch (index) {
             case 0:
-               Navigator.push(
+              Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => Home(usernameEmail: '',)),
               );
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Categories()),
+                MaterialPageRoute(builder: (context) => Categories(usernameEmail: '',)),
               );
               break;
             case 2: // For Toy Lists
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ToyList()), // Navigate to ToyList
+                    builder: (context) => ToyList(usernameEmail: '',)), // Navigate to ToyList
               );
               break;
             // Add navigation for other items if needed
             case 3:
-            Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CouponList()), // Navigate to ToyList
+                    builder: (context) => CouponList(usernameEmail: '',)), // Navigate to ToyList
               );
               break;
             case 4:
-            Navigator.push(context, 
-            MaterialPageRoute(builder: (context) => Dashboard())
-            );
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Dashboard(
+                            userEmail: usernameEmail,
+                          )));
               break;
           }
         },

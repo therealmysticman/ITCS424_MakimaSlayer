@@ -8,6 +8,9 @@ import 'Search.dart'; // Import the Search screen
 import 'Toylist.dart';
 
 class Home extends StatelessWidget {
+  final String usernameEmail;
+  Home({required this.usernameEmail});
+
   @override
   Widget build(BuildContext context) {
     // Define your cartItems list
@@ -72,7 +75,10 @@ class Home extends StatelessWidget {
           image: DecorationImage(
             image: AssetImage("assets/imagebg.jpg"),
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop), // Adjust opacity here (0.5 means 50% opacity)
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.3),
+                BlendMode
+                    .dstATop), // Adjust opacity here (0.5 means 50% opacity)
           ),
         ),
         child: Padding(
@@ -134,32 +140,39 @@ class Home extends StatelessWidget {
           // Handle navigation
           switch (index) {
             case 0:
+             Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Home(usernameEmail: usernameEmail,)),
+              );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Categories()),
+                MaterialPageRoute(builder: (context) => Categories(usernameEmail: usernameEmail,)),
               );
               break;
             case 2: // For Toy Lists
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ToyList()), // Navigate to ToyList
+                    builder: (context) => ToyList(usernameEmail: usernameEmail,)), // Navigate to ToyList
               );
               break;
             // Add navigation for other items if needed
             case 3:
-             Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CouponList()), // Navigate to ToyList
+                    builder: (context) => CouponList(usernameEmail: usernameEmail,)), // Navigate to ToyList
               );
               break;
             case 4:
-            Navigator.push(context, 
-            MaterialPageRoute(builder: (context) => Dashboard())
-            );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Dashboard(userEmail: usernameEmail)),
+              );
+
               break;
           }
         },

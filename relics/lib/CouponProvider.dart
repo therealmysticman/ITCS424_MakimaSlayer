@@ -13,6 +13,12 @@ class CouponProvider with ChangeNotifier {
   String _selectedCouponTitle = 'Select Coupon'; // Default value
 
   String get selectedCouponTitle => _selectedCouponTitle; 
+
+  void updateSelectedCouponTitle(String title) {
+    _selectedCouponTitle = title;
+    notifyListeners();
+  }
+  
   void selectCoupon(String couponId, Map<String, dynamic> data) {
     _selectedCouponIds.add(couponId);
     _selectedCouponData[couponId] =

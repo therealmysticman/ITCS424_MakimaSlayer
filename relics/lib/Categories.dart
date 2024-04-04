@@ -11,6 +11,8 @@ import 'ToyTypeCategories.dart';
 import 'ToyYearCategories.dart';
 
 class Categories extends StatelessWidget {
+  final String usernameEmail;
+  Categories({required this.usernameEmail});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,13 +160,13 @@ class Categories extends StatelessWidget {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => Home(usernameEmail: usernameEmail,)),
               );
               break;
             case 2: // For Toy Lists
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ToyList()), // Navigate to ToyList
+                MaterialPageRoute(builder: (context) => ToyList(usernameEmail: usernameEmail,)), // Navigate to ToyList
               );
               break;
             // Add navigation for other items if needed
@@ -172,12 +174,12 @@ class Categories extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CouponList()), // Navigate to ToyList
+                    builder: (context) => CouponList(usernameEmail: usernameEmail,)), // Navigate to ToyList
               );
               break;
             case 4:
             Navigator.push(context, 
-            MaterialPageRoute(builder: (context) => Dashboard())
+            MaterialPageRoute(builder: (context) => Dashboard(userEmail: usernameEmail,))
             );
               break;
           }

@@ -1,10 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'Categories.dart';
+import 'CouponList.dart';
 import 'Home.dart';
+import 'SignIn.dart';
 import 'Toylist.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
+  final String userEmail;
+
+  Dashboard({required this.userEmail});
+
+  @override
+  _DashboardState createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  String username = '';
+  String email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      print('Fetching user data for email: ${widget.userEmail}');
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('UserData')
+          .where('Email', isEqualTo: widget.userEmail)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final userData = querySnapshot.docs.first.data();
+
+        setState(() {
+          username = (userData as Map<String, dynamic>)['Username'];
+          email = (userData as Map<String, dynamic>)['Email'];
+        });
+
+        print('User data fetched successfully: $userData');
+      } else {
+        print('No user data found for email: ${widget.userEmail}');
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,20 +79,19 @@ class Dashboard extends StatelessWidget {
             child: Row(
               children: [
                 CircleAvatar(
-                  // Display user profile image
-                  radius: 30,
-                  backgroundImage: NetworkImage('https://example.com/user_profile_image.jpg'),
-                ),
+                    // Display user profile image
+                    child: Image.asset('assets/profile.png')),
                 SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Username',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      '$username',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'user@example.com',
+                      '$email', // Display username and email here
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
@@ -85,11 +130,15 @@ class Dashboard extends StatelessWidget {
             leading: Icon(Icons.logout),
             title: Text('Logout'),
             onTap: () {
-              // Implement logout functionality
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SignInPage()), // Assuming SignInPage is your login page
+              );
             },
           ),
         ],
-        
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
@@ -114,7 +163,7 @@ class Dashboard extends StatelessWidget {
             label: 'Dashboard',
           ),
         ],
-        currentIndex: 0, // Set index of Categories page
+        currentIndex: 4, // Set index of Categories page
         selectedItemColor:
             Color.fromARGB(255, 108, 2, 126), // Selected item color
         unselectedItemColor:
@@ -124,30 +173,49 @@ class Dashboard extends StatelessWidget {
           // Handle navigation
           switch (index) {
             case 0:
-               Navigator.push(
+              Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Home()),
+                MaterialPageRoute(
+                    builder: (context) => Home(
+                          usernameEmail: email,
+                        )),
               );
+              break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Categories()),
+                MaterialPageRoute(
+                    builder: (context) => Categories(
+                          usernameEmail: email,
+                        )),
               );
               break;
             case 2: // For Toy Lists
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ToyList()), // Navigate to ToyList
+                    builder: (context) => ToyList(
+                          usernameEmail: email,
+                        )), // Navigate to ToyList
               );
               break;
             // Add navigation for other items if needed
             case 3:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CouponList(
+                          usernameEmail: email,
+                        )), // Navigate to ToyList
+              );
               break;
             case 4:
-            Navigator.push(context, 
-            MaterialPageRoute(builder: (context) => Dashboard())
-            );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Dashboard(userEmail: email)),
+              );
+
               break;
           }
         },

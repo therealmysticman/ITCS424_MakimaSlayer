@@ -5,10 +5,12 @@ import 'CouponList.dart';
 import 'CouponProvider.dart';
 
 class GetCoupon extends StatelessWidget {
-    final String redeemCouponId;
+  final String redeemCouponId;
+  final String usernameEmail;
+  GetCoupon({required this.redeemCouponId ,required this.usernameEmail});
 
-  GetCoupon({required this.redeemCouponId});
   
+
   @override
   Widget build(BuildContext context) {
     final selectedCouponData =
@@ -61,10 +63,14 @@ class GetCoupon extends StatelessWidget {
                   ),
                   trailing: ElevatedButton(
                     onPressed: () {
-                      final redeemCouponId = couponId; // Use couponId here
-                      final redeemedCouponTitle = title; // Use coupon title here
-                      Navigator.pop(context, {'id': redeemCouponId, 'title': redeemedCouponTitle});
-                      print('$redeemCouponId,$redeemedCouponTitle');
+                      final redeemCouponId = couponId;
+                      final redeemedCouponTitle = title;
+                      final discountPercentage = discount; // Use DiscountCost here
+                      Navigator.pop(context, {
+                        'id': redeemCouponId,
+                        'title': redeemedCouponTitle,
+                        'discountPercentage': discountPercentage
+                      });
                     },
                     child: Text('Redeem'),
                   ),
@@ -79,7 +85,7 @@ class GetCoupon extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CouponList(), // Navigate to CouponList
+              builder: (context) => CouponList(usernameEmail: usernameEmail,), // Navigate to CouponList
             ),
           );
         },

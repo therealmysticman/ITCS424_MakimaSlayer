@@ -3,6 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'ToyDetails.dart';
 
 class ToyPriceCategories extends StatelessWidget {
+  final String userEmail;
+
+  ToyPriceCategories({required this.userEmail});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +42,7 @@ class ToyPriceCategories extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ToysByPriceScreen(priceCategory: priceCategory, minPrice: minPrice, maxPrice: maxPrice),
+        builder: (context) => ToysByPriceScreen(priceCategory: priceCategory, minPrice: minPrice, maxPrice: maxPrice, userEmail: userEmail),
       ),
     );
   }
@@ -48,8 +52,9 @@ class ToysByPriceScreen extends StatelessWidget {
   final String priceCategory;
   final double minPrice;
   final double maxPrice;
+  final String userEmail;
 
-  const ToysByPriceScreen({required this.priceCategory, required this.minPrice, required this.maxPrice});
+  const ToysByPriceScreen({required this.priceCategory, required this.minPrice, required this.maxPrice, required this.userEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +77,10 @@ class ToysByPriceScreen extends StatelessWidget {
           final List<Map<String, dynamic>> toysInRange = snapshot.data!.docs
               .map((doc) => doc.data() as Map<String, dynamic>)
               .where((toy) {
-                final String priceString = toy['Price'];
-                final double price = double.tryParse(priceString.replaceAll(' Baht', '')) ?? 0.0;
-                return price >= minPrice && price < maxPrice;
-              })
+            final String priceString = toy['Price'];
+            final double price = double.tryParse(priceString.replaceAll(' Baht', '')) ?? 0.0;
+            return price >= minPrice && price < maxPrice;
+          })
               .toList();
 
           return GridView.builder(
@@ -93,40 +98,53 @@ class ToysByPriceScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ToyDetails(toyData: data, selectedItemsIds: [], selectedCouponData: {}),
-                ),
+                      builder: (context) => ToyDetails(toyData: data, selectedItemsIds: [], selectedCouponData: {}, userEmail: userEmail),
+                    ),
                   );
                 },
                 child: Card(
                   elevation: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: Image.network(
-                          data['Image'],
-                          fit: BoxFit.cover,
-                          alignment: FractionalOffset.topCenter,
-                        ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color.fromARGB(255, 253, 248, 253), // Start color
+                          Color.fromARGB(255, 227, 216, 239), // End color
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              data['Title'],
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            SizedBox(height: 4),
-                            Text('Release Year: ${data['Release Year']}'),
-                            Text('Price: ${data['Price']}'),
-                          ],
+                      borderRadius: BorderRadius.circular(10.0), // Same border radius as above
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: Image.network(
+                            data['Image'],
+                            fit: BoxFit.cover,
+                            alignment: FractionalOffset.topCenter, // Cover the whole area
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data['Title'],
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(height: 4),
+                              Text('Release Year: ${data['Release Year']}'),
+                              Text('Price: ${data['Price']}'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

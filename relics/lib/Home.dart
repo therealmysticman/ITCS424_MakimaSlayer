@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Search(), // Navigate to Search screen
+                    builder: (context) => Search(usernameEmail: usernameEmail,), // Navigate to Search screen
                   ),
                 );
               },
@@ -55,7 +55,7 @@ class Home extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                Search(), // Navigate to Search screen
+                                Search(usernameEmail: usernameEmail,), // Navigate to Search screen
                           ),
                         );
                       },
@@ -67,7 +67,7 @@ class Home extends StatelessWidget {
           ),
         ),
         actions: [
-          CartIcon(), // Include the CartIcon widget here
+          CartIcon(userEmail: usernameEmail,), // Include the CartIcon widget here
         ],
       ),
       body: Container(
@@ -86,7 +86,11 @@ class Home extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+            children: [ Image.asset(
+              'assets/relicslogo.png', // Replace with your image path
+              height: 150, // Adjust height as needed
+              fit: BoxFit.contain, // Adjust the fit as needed
+            ),
               Text(
                 'Welcome to Relic+!',
                 style: TextStyle(

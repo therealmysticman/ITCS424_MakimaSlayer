@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'ToyDetails.dart';
 
 class ToyManufacturer extends StatelessWidget {
+  final String userEmail; // Add userEmail here
+
+  ToyManufacturer({required this.userEmail}); // Add constructor
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +55,10 @@ class ToyManufacturer extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ToysByManufacturerScreen(manufacturer: manufacturer),
+        builder: (context) => ToysByManufacturerScreen(
+          manufacturer: manufacturer,
+          userEmail: userEmail, // Pass userEmail to ToysByManufacturerScreen
+        ),
       ),
     );
   }
@@ -59,8 +66,12 @@ class ToyManufacturer extends StatelessWidget {
 
 class ToysByManufacturerScreen extends StatelessWidget {
   final String manufacturer;
+  final String userEmail; // Add userEmail here
 
-  const ToysByManufacturerScreen({required this.manufacturer});
+  const ToysByManufacturerScreen({
+    required this.manufacturer,
+    required this.userEmail, // Update constructor
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,40 +106,60 @@ class ToysByManufacturerScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ToyDetails(toyData: data, selectedItemsIds: [], selectedCouponData: {}), // Pass empty data for selected items and coupon,
+                      builder: (context) => ToyDetails(
+                        toyData: data,
+                        selectedItemsIds: [],
+                        selectedCouponData: {},
+                        userEmail: userEmail, // Pass userEmail to ToyDetails
+                      ),
                     ),
                   );
                 },
                 child: Card(
                   elevation: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: Image.network(
-                          data['Image'],
-                          fit: BoxFit.cover,
-                          alignment: FractionalOffset.topCenter,
-                        ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color.fromARGB(255, 253, 248, 253), // Start color
+                          Color.fromARGB(255, 227, 216, 239), // End color
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              data['Title'],
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            SizedBox(height: 4),
-                            Text('Release Year: ${data['Release Year']}'),
-                            Text('Price: ${data['Price']}'),
-                          ],
+                      borderRadius: BorderRadius.circular(
+                        10.0,
+                      ), // Same border radius as above
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: Image.network(
+                            data['Image'],
+                            fit: BoxFit.cover,
+                            alignment: FractionalOffset.topCenter, // Cover the whole area
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data['Title'],
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(height: 4),
+                              Text('Release Year: ${data['Release Year']}'),
+                              Text('Price: ${data['Price']}'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

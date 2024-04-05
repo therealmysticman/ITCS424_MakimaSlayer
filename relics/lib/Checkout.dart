@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:relics/CouponProvider.dart';
-import 'package:relics/Home.dart';
 import 'package:relics/GetCoupon.dart';
+import 'package:relics/OrderProcess.dart';
 
 import 'AddressSelect.dart';
 import 'CardList.dart';
@@ -12,11 +12,13 @@ class CheckoutPage extends StatefulWidget {
   final List<String> selectedItemsIds;
   final double totalPriceTHB;
   final Map<String, dynamic> selectedCouponData;
+  final String usernameEmail;
 
   CheckoutPage({
     required this.selectedItemsIds,
     required this.totalPriceTHB,
     required this.selectedCouponData,
+    required this.usernameEmail,
   });
 
   @override
@@ -237,7 +239,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Home(usernameEmail: '',),
+                builder: (context) => OrderProcessedPage(userEmail: widget.usernameEmail),
               ),
             );
           }

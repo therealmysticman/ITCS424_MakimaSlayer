@@ -19,7 +19,7 @@ class Categories extends StatelessWidget {
       appBar: AppBar(
         title: Text('Categories'),
         actions: [
-          CartIcon(), // Include the CartIcon widget here
+          CartIcon(userEmail: usernameEmail,), // Include the CartIcon widget here
         ],
       ),
       body: Container(
@@ -48,7 +48,7 @@ class Categories extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ToyTypeCategories()),
+                      MaterialPageRoute(builder: (context) => ToyTypeCategories(userEmail: usernameEmail,)),
                     );
                   },
                   child: Text(
@@ -70,7 +70,7 @@ class Categories extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ToyYearCategories()),
+                      MaterialPageRoute(builder: (context) => ToyYearCategories(userEmail: usernameEmail,)),
                     );
                   },
                   child: Text(
@@ -92,7 +92,7 @@ class Categories extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ToyManufacturer()),
+                      MaterialPageRoute(builder: (context) => ToyManufacturer(userEmail: usernameEmail,)),
                     );
                   },
                   child: Text(
@@ -114,7 +114,7 @@ class Categories extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ToyPriceCategories()),
+                      MaterialPageRoute(builder: (context) => ToyPriceCategories(userEmail: usernameEmail,)),
                     );
                   },
                   child: Text(

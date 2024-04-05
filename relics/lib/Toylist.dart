@@ -33,54 +33,73 @@ class ToyList extends StatelessWidget {
             ),
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (BuildContext context, int index) {
-              Map<String, dynamic> data = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              Map<String, dynamic> data =
+                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
               return GestureDetector(
-                onTap: () {
-                  // Navigate to ToyDetails screen
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ToyDetails(toyData: data, selectedItemsIds: [], selectedCouponData: {}),
-                ),
-                  );
-                },
-                child: Card(
-                  elevation: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          child: Image.network(
-                            data['Image'],
-                            fit: BoxFit.cover,
-                            alignment: FractionalOffset.topCenter,// Cover the whole area
-                          ),
+                  onTap: () {
+                    // Navigate to ToyDetails screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ToyDetails(
+                            toyData: data,
+                            selectedItemsIds: [],
+                            selectedCouponData: {}, userEmail: usernameEmail,),
+                      ),
+                    );
+                  },
+                  child: Card(
+                    elevation: 3,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color.fromARGB(255, 253, 248, 253), // Start color
+                            Color.fromARGB(255, 227, 216, 239), // End color
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                data['Title'],
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              SizedBox(height: 4),
-                              Text('Release Year: ${data['Release Year']}'),
-                              Text('Price: ${data['Price']}'),
-                            ],
+                        borderRadius: BorderRadius.circular(
+                            10.0), // Same border radius as above
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: Image.network(
+                              data['Image'],
+                              fit: BoxFit.cover,
+                              alignment: FractionalOffset
+                                  .topCenter, // Cover the whole area
+                            ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data['Title'],
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: 4),
+                                Text('Release Year: ${data['Release Year']}'),
+                                Text('Price: ${data['Price']}'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                ),
+                  )
               );
             },
           );
         },
-      ), 
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -103,45 +122,59 @@ class ToyList extends StatelessWidget {
             icon: Icon(Icons.dashboard),
             label: 'Dashboard',
           ),
-          
         ],
         currentIndex: 2, // Set index of Categories page
-        selectedItemColor: Color.fromARGB(255, 108, 2, 126), // Selected item color
-        unselectedItemColor: Color.fromARGB(255, 95, 76, 113), // Unselected item color
+        selectedItemColor:
+            Color.fromARGB(255, 108, 2, 126), // Selected item color
+        unselectedItemColor:
+            Color.fromARGB(255, 95, 76, 113), // Unselected item color
         iconSize: 24, // Adjust icon size
-       onTap: (index) {
+        onTap: (index) {
           // Handle navigation
           switch (index) {
             case 0:
-               Navigator.push(
+              Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Home(usernameEmail: usernameEmail,)),
+                MaterialPageRoute(
+                    builder: (context) => Home(
+                          usernameEmail: usernameEmail,
+                        )),
               );
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Categories(usernameEmail: usernameEmail,)),
+                MaterialPageRoute(
+                    builder: (context) => Categories(
+                          usernameEmail: usernameEmail,
+                        )),
               );
               break;
             case 2: // For Toy Lists
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ToyList(usernameEmail: usernameEmail,)), // Navigate to ToyList
+                    builder: (context) => ToyList(
+                          usernameEmail: usernameEmail,
+                        )), // Navigate to ToyList
               );
               break;
             // Add navigation for other items if needed
             case 3:
-            Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CouponList(usernameEmail: usernameEmail,)), // Navigate to ToyList
+                    builder: (context) => CouponList(
+                          usernameEmail: usernameEmail,
+                        )), // Navigate to ToyList
               );
               break;
             case 4:
-            Navigator.push(context, 
-            MaterialPageRoute(builder: (context) => Dashboard(userEmail: usernameEmail,))
-            );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Dashboard(
+                            userEmail: usernameEmail,
+                          )));
               break;
           }
         },

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'SearchResults.dart';
 
 class Search extends StatefulWidget {
+  final String usernameEmail;
+
+  Search({required this.usernameEmail});
+
   @override
   _SearchState createState() => _SearchState();
 }
@@ -69,7 +73,7 @@ class _SearchState extends State<Search> {
     if (_searchController.text.isEmpty) {
       return Center(child: Text('Enter a search query'));
     } else {
-      return SearchResults(searchQuery: _searchController.text);
+      return SearchResults(searchQuery: _searchController.text, userEmail: widget.usernameEmail);
     }
   }
 

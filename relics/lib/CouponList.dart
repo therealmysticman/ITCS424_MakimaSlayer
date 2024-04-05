@@ -82,10 +82,11 @@ class CouponList extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      isSelected ? Colors.grey : Colors.blue,
+                      isSelected ? Colors.grey : Color.fromARGB(255, 141, 39, 108),
                     ),
                   ),
-                  child: Text(isSelected ? 'Selected' : 'Select'),
+                  child: Text(isSelected ? 'Selected' : 'Select',
+                  style: TextStyle(color: isSelected? const Color.fromARGB(255, 60, 60, 60) : Color.fromARGB(255, 255, 163, 221) ),),
                 ),
               );
             },
@@ -132,14 +133,14 @@ class CouponList extends StatelessWidget {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Categories(usernameEmail: '',)),
+                MaterialPageRoute(builder: (context) => Categories(usernameEmail: usernameEmail,)),
               );
               break;
             case 2: // For Toy Lists
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ToyList(usernameEmail: '',)), // Navigate to ToyList
+                    builder: (context) => ToyList(usernameEmail: usernameEmail,)), // Navigate to ToyList
               );
               break;
             // Add navigation for other items if needed
@@ -147,7 +148,7 @@ class CouponList extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CouponList(usernameEmail: '',)), // Navigate to ToyList
+                    builder: (context) => CouponList(usernameEmail: usernameEmail,)), // Navigate to ToyList
               );
               break;
             case 4:

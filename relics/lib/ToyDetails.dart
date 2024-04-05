@@ -8,17 +8,18 @@ class ToyDetails extends StatelessWidget {
   final Map<String, dynamic> toyData;
   final List<String> selectedItemsIds;
   final Map<String, dynamic> selectedCouponData;
+  final String userEmail;
 
   ToyDetails({
     required this.toyData,
     required this.selectedItemsIds,
     required this.selectedCouponData,
+    required this.userEmail,
   });
 
   @override
 Widget build(BuildContext context) {
   final selectedCouponData = Provider.of<CouponProvider>(context).selectedCouponData;
-
   return Consumer<CartProvider>(
     builder: (context, cartProvider, _) => Scaffold(
       appBar: AppBar(
@@ -77,7 +78,7 @@ Widget build(BuildContext context) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CheckoutPage(selectedItemsIds: updatedSelectedItemsIds, totalPriceTHB: totalPriceTHB, selectedCouponData: selectedCouponData),
+                builder: (context) => CheckoutPage(selectedItemsIds: updatedSelectedItemsIds, totalPriceTHB: totalPriceTHB, selectedCouponData: selectedCouponData, usernameEmail: userEmail,),
               ),
             );
           }

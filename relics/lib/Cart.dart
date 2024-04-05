@@ -5,11 +5,14 @@ import 'package:relics/CartProvider.dart'; // Import the CartProvider
 import 'package:relics/CouponProvider.dart'; // Import the CouponProvider
 
 class CartPage extends StatelessWidget {
+  final String userEmail; // Add userEmail as a parameter
+
+  CartPage({required this.userEmail}); // Constructor
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
     final selectedCouponData = Provider.of<CouponProvider>(context).selectedCouponData;
-
+    
     // Calculate total price in Thai Baht (THB)
     double totalPriceTHB = 0.0;
     for (var item in cartProvider.cartItems) {
@@ -122,6 +125,7 @@ class CartPage extends StatelessWidget {
                         selectedItemsIds: selectedItemsIds,
                         totalPriceTHB: totalPriceTHB,
                         selectedCouponData: selectedCouponData,
+                        usernameEmail: userEmail,
                       ),
                     ),
                   );

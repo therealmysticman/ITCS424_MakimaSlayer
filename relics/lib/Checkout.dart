@@ -172,7 +172,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     // Use the context to rebuild the UI
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text('Coupon redeemed: $redeemedCouponTitle'),
-                    ));
+                    )
+                    );
                   }
                 },
               ),
@@ -236,12 +237,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
           if (index == 0) {
             // No action needed since it's displaying the total price
           } else if (index == 1) {
+             Provider.of<CouponProvider>(context, listen: false).clearUseRedeemCoupon();
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => OrderProcessedPage(userEmail: widget.usernameEmail),
               ),
             );
+            
           }
         },
       ),

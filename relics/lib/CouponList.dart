@@ -82,7 +82,7 @@ class CouponList extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      isSelected ? Colors.grey : Color.fromARGB(255, 141, 39, 108),
+                      isSelected ? Colors.grey : Color.fromARGB(255, 119, 39, 141),
                     ),
                   ),
                   child: Text(isSelected ? 'Selected' : 'Select',
@@ -128,7 +128,7 @@ class CouponList extends StatelessWidget {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Home(usernameEmail: '',)),
+                MaterialPageRoute(builder: (context) => Home(usernameEmail: usernameEmail,)),
               );
             case 1:
               Navigator.push(

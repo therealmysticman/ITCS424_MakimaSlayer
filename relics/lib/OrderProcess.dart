@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'CouponProvider.dart';
 import 'Home.dart';
 
 class OrderProcessedPage extends StatelessWidget {
@@ -30,6 +32,7 @@ class OrderProcessedPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navigate back to homepage
+              Provider.of<CouponProvider>(context, listen: false).clearRedeemCoupon();
                Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Home(usernameEmail: userEmail,)),

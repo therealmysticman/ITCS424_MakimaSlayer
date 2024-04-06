@@ -38,10 +38,20 @@ class CouponProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void clearSelectedCoupons() {
-    _selectedCouponIds.clear();
-    _selectedCouponData
-        .clear(); // Clear selected coupon data when all coupons are cleared
+ 
+void clearRedeemCoupon() {
+  _redeemedCouponIds.clear();
+  _selectedCouponTitle = 'Select Coupon';
+  notifyListeners();
+}
+ void clearUseRedeemCoupon() {
+    // Remove redeemed coupon from selected coupons if present
+    _redeemedCouponIds.forEach((couponId) {
+      if (_selectedCouponIds.contains(couponId)) {
+        _selectedCouponIds.remove(couponId);
+        _selectedCouponData.remove(couponId);
+      }
+    });
     notifyListeners();
   }
 
